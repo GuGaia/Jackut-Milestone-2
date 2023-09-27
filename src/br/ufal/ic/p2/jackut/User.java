@@ -18,7 +18,7 @@ public class User {
     private String password;// Senha do usuário
     private Friends myFriends;
     private Map<String, String> attributes;// Atributos extras do usuário
-    private Queue<Recado> messageBox;// Caixa de mensagens do usuário
+    private Queue<Message> messageBox;// Caixa de mensagens do usuário
 
     /**
      * Construtor da classe User
@@ -61,7 +61,7 @@ public class User {
      * Obtém a caixa de mensagens do usuário
      * @return caixa de mensagens do usuário
      */
-    public Queue<Recado> getMessageBox() {
+    public Queue<Message> getMessageBox() {
         return messageBox;
     }
     /**
@@ -96,7 +96,7 @@ public class User {
      * Atualiza a caixa de mensagem do usuário
      * @param messageBox caixa de mensagem do usuário
      */
-    public void setMessageBox(Queue<Recado> messageBox) {
+    public void setMessageBox(Queue<Message> messageBox) {
         this.messageBox = messageBox;
     }
     public String getUserAttribute(String attribute){
@@ -133,10 +133,10 @@ public class User {
     /**
      * Adiciona um recado à caixa de mensagens do usuário.
      *
-     * @param recado O recado a ser adicionado.
+     * @param message O recado a ser adicionado.
      */
-    public void receiveMessage(Recado recado){
-        this.messageBox.add(recado);
+    public void receiveMessage(Message message){
+        this.messageBox.add(message);
     }
     /**
      * Adiciona um usuário autenticado como amigo de outro usuário enviando uma solicitação, deve ser confirmada
@@ -165,6 +165,31 @@ public class User {
     public String getFriendList(){
         ArrayList<String> friends = this.myFriends.getFriendsList();
         return friends.isEmpty() ? "{}" : "{" + String.join(",", friends) + "}";
+    }
+
+    /**
+     * Envia um recado para outro usuário.
+     *
+     * @param receiver O login do destinatário do recado.
+     * @param messageContent O conteúdo da mensagem.
+     * @throws RuntimeException Se os usuários não forem encontrados.
+     */
+    public void sendMessage(User receiver, String messageContent){
+        if (this == receiver) throw new RuntimeException("Usuário não pode enviar recado para si mesmo.");
+        if(receiver != null){
+            Message message = new Message(this.login, messageContent);
+            receiver.receiveMessage(message);
+        }
+            else throw new RuntimeException("USER_NOT_FOUND");
+    }
+    /**
+     * Lê o primeiro recado da caixa de mensagens de um usuário.
+     * @throws RuntimeException Se não houver recados na caixa de mensagens.
+     */
+    public String readMessage(){
+        Message message = this.messageBox.poll();
+        if(message == null) throw new RuntimeException("Não há recados.");
+        else return message.getMessage();
 
     }
 }

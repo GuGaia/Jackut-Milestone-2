@@ -1,5 +1,5 @@
 # User Story 4 - Envio e leitura de recados entre usuários
-# Permita a um usuário cadastrado do Jackut enviar um recado a qualquer outro usuário cadastrado.
+# Permita a um usuário cadastrado do Jackut enviar um message a qualquer outro usuário cadastrado.
 
 zerarSistema
 
@@ -7,15 +7,15 @@ criarUsuario login=jpsauve senha=sauvejp nome="Jacques Sauve"
 
 id1=abrirSessao login=jpsauve senha=sauvejp
 
-expectError "Usuário não cadastrado." enviarRecado id=${id1} destinatario=oabath recado="Ola!"
+expectError "Usuário não cadastrado." enviarRecado id=${id1} destinatario=oabath message="Ola!"
 
 criarUsuario login=oabath senha=abatho nome="Osorio Abath"
 
-enviarRecado id=${id1} destinatario=oabath recado="Ola!"
+enviarRecado id=${id1} destinatario=oabath message="Ola!"
 
 id2=abrirSessao login=oabath senha=abatho
 
-enviarRecado id=${id2} destinatario=jpsauve recado="Fala!"
+enviarRecado id=${id2} destinatario=jpsauve message="Fala!"
 
 expect "Ola!" lerRecado id=${id2}
 expect "Fala!" lerRecado id=${id1}
@@ -23,11 +23,11 @@ expect "Fala!" lerRecado id=${id1}
 expectError "Não há recados." lerRecado id=${id1}
 expectError "Não há recados." lerRecado id=${id2}
 
-enviarRecado id=${id1} destinatario=oabath recado="Recado 1"
-enviarRecado id=${id1} destinatario=oabath recado="Recado 2"
-enviarRecado id=${id1} destinatario=oabath recado="Recado 3"
-enviarRecado id=${id1} destinatario=oabath recado="Recado 4"
-enviarRecado id=${id1} destinatario=oabath recado="Recado 5"
+enviarRecado id=${id1} destinatario=oabath message="Recado 1"
+enviarRecado id=${id1} destinatario=oabath message="Recado 2"
+enviarRecado id=${id1} destinatario=oabath message="Recado 3"
+enviarRecado id=${id1} destinatario=oabath message="Recado 4"
+enviarRecado id=${id1} destinatario=oabath message="Recado 5"
 
 expect "Recado 1" lerRecado id=${id2}
 expect "Recado 2" lerRecado id=${id2}
@@ -39,10 +39,10 @@ expectError "Não há recados." lerRecado id=${id2}
 criarUsuario login=jdoe senha=abc nome="John Doe"
 id3=abrirSessao login=jdoe senha=abc
 
-enviarRecado id=${id1} destinatario=oabath recado="Recado 1 de Jacques"
-enviarRecado id=${id3} destinatario=oabath recado="Recado 1 de John"
-enviarRecado id=${id3} destinatario=oabath recado="Recado 2 de John"
-enviarRecado id=${id1} destinatario=oabath recado="Recado 2 de Jacques"
+enviarRecado id=${id1} destinatario=oabath message="Recado 1 de Jacques"
+enviarRecado id=${id3} destinatario=oabath message="Recado 1 de John"
+enviarRecado id=${id3} destinatario=oabath message="Recado 2 de John"
+enviarRecado id=${id1} destinatario=oabath message="Recado 2 de Jacques"
 
 expect "Recado 1 de Jacques" lerRecado id=${id2}
 expect "Recado 1 de John" lerRecado id=${id2}
@@ -50,18 +50,18 @@ expect "Recado 2 de John" lerRecado id=${id2}
 expect "Recado 2 de Jacques" lerRecado id=${id2}
 expectError "Não há recados." lerRecado id=${id2}
 
-# erros de envio de recado
+# erros de envio de message
 
-expectError "Usuário não pode enviar recado para si mesmo." enviarRecado id=${id1} destinatario=jpsauve recado="Ola"
+expectError "Usuário não pode enviar message para si mesmo." enviarRecado id=${id1} destinatario=jpsauve message="Ola"
 
 # envio de recados para serem testados no arquivo de persistência
 
-enviarRecado id=${id1} destinatario=oabath recado="Recado de Jacques para Osorio"
-enviarRecado id=${id2} destinatario=jpsauve recado="Recado de Osorio para Jacques"
-enviarRecado id=${id3} destinatario=oabath recado="Recado de John para Osorio"
-enviarRecado id=${id2} destinatario=jdoe recado="Recado de Osorio para John"
-enviarRecado id=${id1} destinatario=jdoe recado="Recado de Jacques para John"
-enviarRecado id=${id3} destinatario=jpsauve recado="Recado de John para Jacques"
+enviarRecado id=${id1} destinatario=oabath message="Recado de Jacques para Osorio"
+enviarRecado id=${id2} destinatario=jpsauve message="Recado de Osorio para Jacques"
+enviarRecado id=${id3} destinatario=oabath message="Recado de John para Osorio"
+enviarRecado id=${id2} destinatario=jdoe message="Recado de Osorio para John"
+enviarRecado id=${id1} destinatario=jdoe message="Recado de Jacques para John"
+enviarRecado id=${id3} destinatario=jpsauve message="Recado de John para Jacques"
 
 encerrarSistema
 

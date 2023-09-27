@@ -190,7 +190,7 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;destinatario,
  <a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mensagem)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Envia um recado de um usuário para outro.</div>
+<div class="block">Envia um message de um usuário para outro.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAmigos(java.lang.String)" class="member-name-link">getAmigos</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;login)</code></div>
@@ -206,7 +206,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lerRecado(java.lang.String)" class="member-name-link">lerRecado</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Lê o primeiro recado da caixa de mensagens de um usuário.</div>
+<div class="block">Lê o primeiro message da caixa de mensagens de um usuário.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#zerarSistema()" class="member-name-link">zerarSistema</a>()</code></div>
@@ -402,11 +402,11 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enviarRecado</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;destinatario,
  <a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mensagem)</span></div>
-<div class="block">Envia um recado de um usuário para outro.</div>
+<div class="block">Envia um message de um usuário para outro.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - O ID da sessão do remetente.</dd>
-<dd><code>destinatario</code> - O login do destinatário do recado.</dd>
+<dd><code>destinatario</code> - O login do destinatário do message.</dd>
 <dd><code>mensagem</code> - O conteúdo da mensagem.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code> - Se os usuários não forem encontrados.</dd>
@@ -417,12 +417,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="lerRecado(java.lang.String)">
 <h3>lerRecado</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">lerRecado</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
-<div class="block">Lê o primeiro recado da caixa de mensagens de um usuário.</div>
+<div class="block">Lê o primeiro message da caixa de mensagens de um usuário.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - O ID da sessão do usuário.</dd>
 <dt>Returns:</dt>
-<dd>O conteúdo do recado lido.</dd>
+<dd>O conteúdo do message lido.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code> - Se não houver recados na caixa de mensagens.</dd>
 </dl>

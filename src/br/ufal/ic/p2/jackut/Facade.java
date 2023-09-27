@@ -1,9 +1,5 @@
 package br.ufal.ic.p2.jackut;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-import java.util.*;
-
 /**
  * A classe Facade oferece uma interface para acessar as funcionalidades do sistema.
  *
@@ -42,8 +38,7 @@ public class Facade {
      * @return O valor do atributo solicitado.
      */
     public String getAtributoUsuario(String login, String atributo){
-        User user = system.getUser(login);
-        return user.getUserAttribute(atributo);
+        return system.getUser(login).getUserAttribute(atributo);
     }
     /**
      * Abre uma sessão para um usuário autenticado.
@@ -63,8 +58,7 @@ public class Facade {
      * @param valor O novo valor para o atributo.
      */
     public void editarPerfil(String Id, String atributo, String valor){
-        Session session = system.getSession(Id);
-        session.editProfile(atributo, valor, system);
+        system.getSession(Id).editProfile(atributo, valor, system);
     }
     /**
      * Verifica se um usuário é amigo de outro usuário.
@@ -83,8 +77,7 @@ public class Facade {
      * @return Uma representação da lista de amigos.
      */
     public String getAmigos(String login){
-        User user = system.getUser(login);
-        return  user.getFriendList();
+        return  system.getUser(login).getFriendList();
     }
     /**
      * Envia um recado de um usuário para outro.
@@ -95,17 +88,7 @@ public class Facade {
      * @throws RuntimeException Se os usuários não forem encontrados.
      */
     public void enviarRecado(String id, String destinatario, String mensagem){
-        User sender = sessions.get(id);
-        User receiver = users.get(destinatario);
-        if (sender == receiver) throw new RuntimeException("Usuário não pode enviar recado para si mesmo.");
-        if(sender != null){
-            if(receiver != null){
-                Recado recado = new Recado(sender.getLogin(), mensagem);
-                receiver.receiveMessage(recado);
-            }
-            else throw new RuntimeException(USER_NOT_FOUND);
-        }
-        else throw new RuntimeException(USER_NOT_FOUND);
+        system.getSession(id).getUser().sendMessage(system.getUser(destinatario), mensagem);
     }
     /**
      * Lê o primeiro recado da caixa de mensagens de um usuário.
@@ -115,11 +98,7 @@ public class Facade {
      * @throws RuntimeException Se não houver recados na caixa de mensagens.
      */
     public String lerRecado(String id){
-        User user = sessions.get(id);
-        Recado recado = user.getMessageBox().poll();
-        if(recado == null) throw new RuntimeException("Não há recados.");
-        else return recado.getMensagem();
-
+        return system.getSession(id).getUser().readMessage();
     }
     /**
      * Encerra o sistema, salvando os dados em um arquivo JSON.

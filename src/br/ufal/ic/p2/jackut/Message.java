@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Gustavo Gaia
  */
-public class Recado {
+public class Message {
     private String remetente;
     private String mensagem;
 
     /**
      * Construtor da classe Recado
      */
-    public Recado(){};
+    public Message(){};
     /**
      * Construtor da classe Recado nas configurações para armazenamento JSON.
      *
@@ -22,7 +22,7 @@ public class Recado {
      * @param mensagem O conteúdo da mensagem.
      */
     @JsonCreator
-    public Recado(@JsonProperty("remetente") String remetente, @JsonProperty("mensagem") String mensagem) {
+    public Message(@JsonProperty("remetente") String remetente, @JsonProperty("mensagem") String mensagem) {
         this.remetente = remetente;
         this.mensagem = mensagem;
     }
@@ -37,7 +37,7 @@ public class Recado {
      * Obtém a mensagem
      * @return a mensagem
      */
-    public String getMensagem() {
+    public String getMessage() {
         return mensagem;
     }
 
