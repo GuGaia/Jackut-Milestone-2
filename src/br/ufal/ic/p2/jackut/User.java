@@ -16,7 +16,7 @@ public class User {
     private String name;// Nome do usuário
     private String login;// Login do usuário
     private String password;// Senha do usuário
-    private Friends friends;
+    private Friends myFriends;
     private Map<String, String> attributes;// Atributos extras do usuário
     private Queue<Recado> messageBox;// Caixa de mensagens do usuário
 
@@ -37,7 +37,7 @@ public class User {
         this.login = login;
         this.password = senha;
         this.name = nome;
-        friends = new Friends();
+        myFriends = new Friends();
         messageBox = new LinkedList<>();
         attributes = new HashMap<>();
     }
@@ -54,8 +54,8 @@ public class User {
      * Obtém a lista de amigos do usuário
      * @return lista de amigos do usuário
      */
-    public Friends getFriends() {
-        return friends;
+    public Friends getMyFriends() {
+        return myFriends;
     }
     /**
      * Obtém a caixa de mensagens do usuário
@@ -90,7 +90,7 @@ public class User {
      * @param friends nova lista de amigos do usuário
      */
     public void setFriends(Friends friends) {
-        this.friends = friends;
+        this.myFriends = friends;
     }
     /**
      * Atualiza a caixa de mensagem do usuário
@@ -138,18 +138,33 @@ public class User {
     public void receiveMessage(Recado recado){
         this.messageBox.add(recado);
     }
-    public void addFriend(User amigo) {
-        if (Objects.equals(user.getLogin(), amigo))
+    /**
+     * Adiciona um usuário autenticado como amigo de outro usuário enviando uma solicitação, deve ser confirmada
+     * pelo recebedor do pedido.
+     *
+     * @param friend O login do amigo a ser adicionado.
+     * @throws RuntimeException Se algum dos usuários não for encontrado.
+     */
+    public void addFriend(User friend) {
+        if (Objects.equals(this, friend))
             throw new RuntimeException("Usuário não pode adicionar a si mesmo como amigo.");
-        else if (user.getFriendSolicitation().contains(amigo)) {
-            user.addFriends(amigo);
-            friendUser.addFriends(user.getLogin());
-        } else if (friendUser.getFriendSolicitation().contains(user.getLogin()))
+        else if (myFriends.getFriendSolicitation().contains(friend.login)) {
+            myFriends.addFriends(friend.login);
+            friend.myFriends.addFriends(this.login);
+        } else if (friend.myFriends.getFriendSolicitation().contains(this.login))
             throw new RuntimeException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
-        else if (ehAmigo(user.getLogin(), amigo))
+        else if (isFriend(friend.login))
             throw new RuntimeException("Usuário já está adicionado como amigo.");
         else {
-            friendUser.addFriendSolicitation(user.getLogin());
+            friend.myFriends.addFriendSolicitation(this.login);
         }
+    }
+    public boolean isFriend(String friend){
+        return myFriends.getFriendsList().contains(friend);
+    }
+    public String getFriendList(){
+        ArrayList<String> friends = this.myFriends.getFriendsList();
+        return friends.isEmpty() ? "{}" : "{" + String.join(",", friends) + "}";
+
     }
 }

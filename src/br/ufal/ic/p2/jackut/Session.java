@@ -8,7 +8,7 @@ public class Session {
 
     public Session(User user){
         this.user = user;
-        this.ID = generateSessionId(user.getLogin());
+        this.ID = generateSessionId(user.getUserAttribute("login"));
     }
     /**
      * Gera um ID único de sessão combinando o login e o momento da criação.

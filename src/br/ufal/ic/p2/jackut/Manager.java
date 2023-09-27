@@ -36,7 +36,7 @@ public class Manager {
                 for (User user : usersList) {
                     createUser(user.getUserAttribute("login"), user.getUserAttribute("senha"), user.getUserAttribute("nome"));
                     User newUser = users.get(user.getUserAttribute("login"));
-                    newUser.setFriends(user.getFriends());
+                    newUser.setFriends(user.getMyFriends());
                     //newUser.friends.setFriendSolicitation(user.friends.getFriendSolicitation());
                     newUser.setMessageBox(user.getMessageBox());
                     for(Map.Entry<String, String> entry : user.getAttributes().entrySet()){
@@ -111,4 +111,6 @@ public class Manager {
     public boolean verifyUser(String login){
         return users.containsKey(login);
     }
+
+
 }

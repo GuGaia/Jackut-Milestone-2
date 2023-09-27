@@ -74,39 +74,7 @@ public class Facade {
      * @return `true` se forem amigos, `false` caso contrário.
      */
     public boolean ehAmigo(String login, String amigo){
-        return system.getUser(login).getFriends().contains(amigo);
-    }
-
-    /**
-     * Adiciona um usuário autenticado como amigo de outro usuário enviando uma solicitação, deve ser confirmada
-     * pelo recebedor do pedido.
-     *
-     * @param id O ID da sessão do usuário.
-     * @param amigo O login do amigo a ser adicionado.
-     * @throws RuntimeException Se algum dos usuários não for encontrado.
-     */
-    public void adicionarAmigo(String id, String amigo){
-        User user = system.getSession(id).getUser();
-        User friend = system.getUser(amigo);
-        user.addFriend(friend);
-
-        if (user == null)throw new RuntimeException(USER_NOT_FOUND);
-        User friendUser = users.get(amigo);
-        if (friendUser != null) {
-            if (Objects.equals(user.getLogin(), amigo))
-                throw new RuntimeException("Usuário não pode adicionar a si mesmo como amigo.");
-            else if (user.getFriendSolicitation().contains(amigo)) {
-                user.addFriends(amigo);
-                friendUser.addFriends(user.getLogin());
-            } else if (friendUser.getFriendSolicitation().contains(user.getLogin()))
-                throw new RuntimeException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
-            else if (ehAmigo(user.getLogin(), amigo))
-                throw new RuntimeException("Usuário já está adicionado como amigo.");
-            else {
-                friendUser.addFriendSolicitation(user.getLogin());
-            }
-        }
-        else{ throw new RuntimeException(USER_NOT_FOUND);}
+        return system.getUser(login). isFriend(amigo);
     }
     /**
      * Obtém a lista de amigos de um usuário.
@@ -115,9 +83,8 @@ public class Facade {
      * @return Uma representação da lista de amigos.
      */
     public String getAmigos(String login){
-        User user = users.get(login);
-        ArrayList<String> friends = user.getFriends();
-        return friends.isEmpty() ? "{}" : "{" + String.join(",", friends) + "}";
+        User user = system.getUser(login);
+        return  user.getFriendList();
     }
     /**
      * Envia um recado de um usuário para outro.
