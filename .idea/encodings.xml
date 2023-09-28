@@ -2,12 +2,22 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/ErrorUtil.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Facade.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/FacadeTest.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Main.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Main.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/Recado.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/User.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/exceptions/UserNotFoundException.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Friends.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Friends.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Message.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Message.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Session.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/Session.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/User.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/models/User.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Facade.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Facade.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Main.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Main.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Manager.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/src/br/ufal/ic/p2/jackut/services/Manager.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/tests/us1_1.txt" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/tests/us1_2.txt" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/tests/us2_1.txt" charset="ISO-8859-1" />

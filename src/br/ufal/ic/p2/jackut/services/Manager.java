@@ -1,5 +1,7 @@
-package br.ufal.ic.p2.jackut;
+package br.ufal.ic.p2.jackut.services;
 
+import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.models.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,12 +11,14 @@ import java.util.*;
 
 public class Manager {
 
-    private Map<String, User> users; // Mapa para armazenar usu√°rios
-    private Map<String, Session> sessions; // Mapa para armazenar sess√µes
+    private Map<String, User> users; // Mapa para armazenar usu·rios
+    private Map<String, Session> sessions; // Mapa para armazenar sessıes
+
+    private ArrayList<Community> communities; //Lista de Comunidades
     private File usersData;
     /**
      * Construtor da classe Facade.
-     * Inicializa os mapas de usu√°rios e sess√µes e carrega os dados existente do sistema, se dispon√≠veis.
+     * Inicializa os mapas de usu·rios e sessıes e carrega os dados existente do sistema, se disponÌveis.
      */
     public Manager() {
         this.users = new HashMap<>();
@@ -22,8 +26,8 @@ public class Manager {
         loadSystem();
     }
     /**
-     * Carrega os dados do sistema a partir de um arquivo JSON, se ele existir, √© inicializado no construtor.
-     * Os dados carregados incluem usu√°rios, amigos, solicita√ß√µes de amizade e mensagens.
+     * Carrega os dados do sistema a partir de um arquivo JSON, se ele existir, È inicializado no construtor.
+     * Os dados carregados incluem usu·rios, amigos, solicitaÁıes de amizade e mensagens.
      */
     public void loadSystem(){
         try {
@@ -49,7 +53,7 @@ public class Manager {
         }
     }
     /**
-     * M√©todo zerarSistema exclui todos os dados do sistema, limpando os mapas de usu√°rios, sess√µes e arquivo de dados.
+     * MÈtodo zerarSistema exclui todos os dados do sistema, limpando os mapas de usu·rios, sessıes e arquivo de dados.
      */
     public void cleanSystem(){
         users.clear();
@@ -75,29 +79,29 @@ public class Manager {
         }
     }
     /**
-     * Cria um novo usu√°rio com as informa√ß√µes fornecidas e o adiciona ao sistema.
+     * Cria um novo usu·rio com as informaÁıes fornecidas e o adiciona ao sistema.
      *
-     * @param login O login do novo usu√°rio.
-     * @param password A senha do novo usu√°rio.
-     * @param name O nome do novo usu√°rio.
-     * @throws RuntimeException Se o login ou a senha forem inv√°lidos ou se um usu√°rio com o mesmo login j√° existir.
+     * @param login O login do novo usu·rio.
+     * @param password A senha do novo usu·rio.
+     * @param name O nome do novo usu·rio.
+     * @throws RuntimeException Se o login ou a senha forem inv·lidos ou se um usu·rio com o mesmo login j· existir.
      */
     public void createUser(String login, String password, String name){
         if (!users.containsKey(login)) {
-            if(login == null) throw new RuntimeException("Login inv√°lido.");
-            if (password == null) throw new RuntimeException("Senha inv√°lida.");
+            if(login == null) throw new InvalidCredentialException("Login inv·lido.");
+            if (password == null) throw new InvalidCredentialException("Senha inv·lida.");
             User user = new User(login, password, name);
             users.put(login, user);
         }
-        else throw new RuntimeException("Conta com esse nome j√° existe.");
+        else throw new InvalidCredentialException("Conta com esse nome j· existe.");
     }
     User getUser(String login){
         if (users.containsKey(login)) return users.get(login);
-        else throw new RuntimeException("USER_NOT_FOUND");
+        else throw new UserNotFoundException();
     }
     Session getSession(String id){
         if (sessions.containsKey(id)) return sessions.get(id);
-        else throw new RuntimeException("SESSION_NOT_FOUND");
+        else throw new UserNotFoundException();
     }
     public String openSession (String login, String password) {
         User user = users.get(login);
@@ -106,7 +110,7 @@ public class Manager {
             sessions.put(session.getID(), session);
             return session.getID();
         }
-        else throw new RuntimeException("Login ou senha inv√°lidos.");
+        else throw new InvalidCredentialException("Login ou senha inv·lidos.");
     }
     public boolean verifyUser(String login){
         return users.containsKey(login);

@@ -52,7 +52,7 @@ expectError "Não há recados." lerRecado id=${id2}
 
 # erros de envio de message
 
-expectError "Usuário não pode enviar message para si mesmo." enviarRecado id=${id1} destinatario=jpsauve message="Ola"
+expectError "Usuário não pode enviar recado para si mesmo." enviarRecado id=${id1} destinatario=jpsauve message="Ola"
 
 # envio de recados para serem testados no arquivo de persistência
 

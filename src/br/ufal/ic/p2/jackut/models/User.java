@@ -1,5 +1,9 @@
-package br.ufal.ic.p2.jackut;
+package br.ufal.ic.p2.jackut.models;
 
+import br.ufal.ic.p2.jackut.exceptions.InvalidCredentialException;
+import br.ufal.ic.p2.jackut.exceptions.InvalidMessageException;
+import br.ufal.ic.p2.jackut.exceptions.MessageNotFoundException;
+import br.ufal.ic.p2.jackut.exceptions.UserNotFoundException;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -107,7 +111,7 @@ public class User {
     }
     public String getExtraAttribute(String attribute) {
         if (attributes.containsKey(attribute)) return attributes.get(attribute);
-        else throw new RuntimeException("Atributo não preenchido.");
+            else throw new InvalidCredentialException("Atributo não preenchido.");
     }
     /**
      * Obtém os atributos extras do usuário em um mapa.
@@ -138,27 +142,7 @@ public class User {
     public void receiveMessage(Message message){
         this.messageBox.add(message);
     }
-    /**
-     * Adiciona um usuário autenticado como amigo de outro usuário enviando uma solicitação, deve ser confirmada
-     * pelo recebedor do pedido.
-     *
-     * @param friend O login do amigo a ser adicionado.
-     * @throws RuntimeException Se algum dos usuários não for encontrado.
-     */
-    public void addFriend(User friend) {
-        if (Objects.equals(this, friend))
-            throw new RuntimeException("Usuário não pode adicionar a si mesmo como amigo.");
-        else if (myFriends.getFriendSolicitation().contains(friend.login)) {
-            myFriends.addFriends(friend.login);
-            friend.myFriends.addFriends(this.login);
-        } else if (friend.myFriends.getFriendSolicitation().contains(this.login))
-            throw new RuntimeException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
-        else if (isFriend(friend.login))
-            throw new RuntimeException("Usuário já está adicionado como amigo.");
-        else {
-            friend.myFriends.addFriendSolicitation(this.login);
-        }
-    }
+
     public boolean isFriend(String friend){
         return myFriends.getFriendsList().contains(friend);
     }
@@ -175,12 +159,12 @@ public class User {
      * @throws RuntimeException Se os usuários não forem encontrados.
      */
     public void sendMessage(User receiver, String messageContent){
-        if (this == receiver) throw new RuntimeException("Usuário não pode enviar recado para si mesmo.");
+        if (this == receiver) throw new InvalidMessageException("Usuário não pode enviar recado para si mesmo.");
         if(receiver != null){
             Message message = new Message(this.login, messageContent);
             receiver.receiveMessage(message);
         }
-            else throw new RuntimeException("USER_NOT_FOUND");
+            else throw new UserNotFoundException();
     }
     /**
      * Lê o primeiro recado da caixa de mensagens de um usuário.
@@ -188,8 +172,12 @@ public class User {
      */
     public String readMessage(){
         Message message = this.messageBox.poll();
-        if(message == null) throw new RuntimeException("Não há recados.");
+        if(message == null) throw new MessageNotFoundException("Não há recados.");
         else return message.getMessage();
 
+    }
+
+    public String getLogin() {
+        return login;
     }
 }

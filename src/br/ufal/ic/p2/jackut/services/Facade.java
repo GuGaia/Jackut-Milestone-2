@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut;
+package br.ufal.ic.p2.jackut.services;
 
 /**
  * A classe Facade oferece uma interface para acessar as funcionalidades do sistema.
@@ -47,7 +47,7 @@ public class Facade {
      * @param senha A senha do usuário.
      * @return O ID da sessão.
      */
-    private String abrirSessao (String login, String senha) {
+    public String abrirSessao (String login, String senha){
         return system.openSession(login, senha);
     }
     /**
@@ -79,6 +79,10 @@ public class Facade {
     public String getAmigos(String login){
         return  system.getUser(login).getFriendList();
     }
+
+    public void adicionarAmigo(String id, String login) {
+        system.getSession(id).addFriend(system.getUser(login));
+    }
     /**
      * Envia um recado de um usuário para outro.
      *
@@ -99,6 +103,10 @@ public class Facade {
      */
     public String lerRecado(String id){
         return system.getSession(id).getUser().readMessage();
+    }
+
+    public void criarComunidade(String sessao, String nome, String descricao){
+        system.getSession(sessao).createCommunity(nome, descricao);
     }
     /**
      * Encerra o sistema, salvando os dados em um arquivo JSON.
