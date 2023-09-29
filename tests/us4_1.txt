@@ -64,4 +64,4 @@ enviarRecado id=${id1} destinatario=jdoe message="Recado de Jacques para John"
 enviarRecado id=${id3} destinatario=jpsauve message="Recado de John para Jacques"
 
 encerrarSistema
-
+quit

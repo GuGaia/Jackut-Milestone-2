@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Message {
     private String remetente;
-    private String mensagem;
+    private String message;
 
     /**
      * Construtor da classe Recado
@@ -24,7 +24,7 @@ public class Message {
     @JsonCreator
     public Message(@JsonProperty("remetente") String remetente, @JsonProperty("mensagem") String mensagem) {
         this.remetente = remetente;
-        this.mensagem = mensagem;
+        this.message = mensagem;
     }
     /**
      * Obtém o remetende da mensagem
@@ -38,7 +38,7 @@ public class Message {
      * @return a mensagem
      */
     public String getMessage() {
-        return mensagem;
+        return message;
     }
 
 }

@@ -96,6 +96,7 @@ public class User {
     public void setFriends(Friends friends) {
         this.myFriends = friends;
     }
+
     /**
      * Atualiza a caixa de mensagem do usuário
      * @param messageBox caixa de mensagem do usuário
@@ -176,8 +177,13 @@ public class User {
         else return message.getMessage();
 
     }
-
     public String getLogin() {
         return login;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getPassword() {
+        return password;
     }
 }

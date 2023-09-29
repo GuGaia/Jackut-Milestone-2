@@ -60,8 +60,9 @@ public class Session {
         }
     }
 
-    public void createCommunity(String name, String description){
-
-        Community community = new Community(name, description, this.user);
+    public Community createCommunity(String name, String description){
+        Community newCommunity = new Community(name, description, this.user.getLogin());
+        newCommunity.addMember(this.user);
+        return newCommunity;
     }
 }

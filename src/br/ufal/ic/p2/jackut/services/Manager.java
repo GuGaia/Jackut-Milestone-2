@@ -5,17 +5,15 @@ import br.ufal.ic.p2.jackut.models.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Manager {
 
     private Map<String, User> users; // Mapa para armazenar usuários
     private Map<String, Session> sessions; // Mapa para armazenar sessões
-
-    private ArrayList<Community> communities; //Lista de Comunidades
-    private File usersData;
+    private Map<String, Community> communities; //Mapa de Comunidades
+    private File usersData, communitiesData;
     /**
      * Construtor da classe Facade.
      * Inicializa os mapas de usuários e sessões e carrega os dados existente do sistema, se disponíveis.
@@ -23,6 +21,9 @@ public class Manager {
     public Manager() {
         this.users = new HashMap<>();
         this.sessions = new HashMap<>();
+        this.communities = new HashMap<>();
+        this.usersData = new File("usuarios.json");
+        this.communitiesData =  new File("comunidades.json");
         loadSystem();
     }
     /**
@@ -32,20 +33,25 @@ public class Manager {
     public void loadSystem(){
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            this.usersData = new File("usuarios.json");
 
-            if(usersData.exists()){
+            if(usersData.exists() && communitiesData.exists()){
                 List<User> usersList = objectMapper.readValue(usersData, new TypeReference<List<User>>() {});
+                List<Community> communitiesList = objectMapper.readValue(communitiesData, new TypeReference<List<Community>>() {});
 
                 for (User user : usersList) {
-                    createUser(user.getUserAttribute("login"), user.getUserAttribute("senha"), user.getUserAttribute("nome"));
+                    createUser(user.getLogin(), user.getPassword(), user.getName());
                     User newUser = users.get(user.getUserAttribute("login"));
                     newUser.setFriends(user.getMyFriends());
-                    //newUser.friends.setFriendSolicitation(user.friends.getFriendSolicitation());
                     newUser.setMessageBox(user.getMessageBox());
                     for(Map.Entry<String, String> entry : user.getAttributes().entrySet()){
                         newUser.setAttributes(entry.getKey(), entry.getValue());}
                 }
+                for (Community community : communitiesList){
+                    Community newCommunity = new Community(community.getName(), community.getDescription(), community.getManager());
+                    communities.put(newCommunity.getName(), newCommunity);
+                    newCommunity.setMembers(community.getMembers());
+                }
+                System.err.println("Dados carregados com sucesso");
             }
         } catch (IOException e){
             System.err.println("Erro ao carregar dados do JSON.");
@@ -58,7 +64,9 @@ public class Manager {
     public void cleanSystem(){
         users.clear();
         sessions.clear();
-        this.usersData.deleteOnExit();
+        communities.clear();
+        usersData.delete();
+        communitiesData.delete();
     }
     /**
      * Encerra o sistema, salvando os dados em um arquivo JSON.
@@ -66,11 +74,12 @@ public class Manager {
     public void closeSystem() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            this.usersData = new File("usuarios.json");
 
             List<User> usersList = new ArrayList<>(users.values());
+            List<Community> communityList = new ArrayList<>(communities.values());
 
             objectMapper.writeValue(usersData, usersList);
+            objectMapper.writeValue(communitiesData, communityList);
 
             System.out.println("Todos os dados foram salvos.");
         } catch (IOException e) {
@@ -116,5 +125,16 @@ public class Manager {
         return users.containsKey(login);
     }
 
-
+    public void createCommunity(String session, String name, String description) {
+        if (communities.containsKey(name)) {
+            throw new InvalidCommunityException("Comunidade com esse nome já existe.");
+        } else{
+            Community community = getSession(session).createCommunity(name, description);
+            communities.put(name, community);
+        }
+    }
+    public Community getCommunity(String name) {
+        if(communities.containsKey(name)) return communities.get(name);
+        else throw new InvalidCommunityException("Comunidade não existe.");
+    }
 }

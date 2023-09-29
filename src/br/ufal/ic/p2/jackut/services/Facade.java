@@ -1,5 +1,8 @@
 package br.ufal.ic.p2.jackut.services;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 /**
  * A classe Facade oferece uma interface para acessar as funcionalidades do sistema.
  *
@@ -9,7 +12,6 @@ public class Facade {
     /**
      * Mensagem de erro que indica que um usuário não foi encontrado no sistema.
      */
-    public static final String USER_NOT_FOUND= "Usuário não cadastrado.";
     private final Manager system;
     /**
      * Construtor da classe Facade.
@@ -106,13 +108,23 @@ public class Facade {
     }
 
     public void criarComunidade(String sessao, String nome, String descricao){
-        system.getSession(sessao).createCommunity(nome, descricao);
+        system.createCommunity(sessao, nome, descricao);
     }
     /**
      * Encerra o sistema, salvando os dados em um arquivo JSON.
      */
     public void encerrarSistema() {
         system.closeSystem();
+    }
+    public String getDescricaoComunidade(String nome){
+        return system.getCommunity(nome).getDescription();
+    }
+    public String getDonoComunidade(String nome){
+        return system.getCommunity(nome).getManager();
+    }
+    public String getMembrosComunidade(String nome) {
+        ArrayList<String> members = system.getCommunity(nome).getMembers();
+        return "{" + String.join(",", members) + "}";
     }
 }
 
